@@ -33,14 +33,14 @@ my_data <- read.csv(
 
 ## a. An appropraite test 
 
-To start off, in order to measure the strength and direction of the relationship between kelp length and temperature I will use Pearson's Correlation Coefficient. In order to model the relationship with a line, I will use a simple linear regression. The Pearson's Correlation Coefficient provides a numerical value to describe the relationship between the two variables and the simple linear regression models this relationship with a line. 
+To start off, in order to measure the strength and direction of the relationship between kelp length and temperature I will use Pearson's Correlation Coefficient. In order to visualize and model the relationship, I will use a simple linear regression. The Pearson's Correlation Coefficient provides a numerical value to describe the relationship between the two variables and the simple linear regression models this relationship with a line. 
 
 ## b. Create a visualization 
 
 ```{r}
 
 # base layer: ggplot
-ggplot(data = temp_kelp, 
+ggplot(data = kelp, 
        # x-axis: temperature
        # y-axis: kelp elongation rate (cm/day)
        mapping = aes(x = temp_c,
@@ -66,8 +66,44 @@ ggplot(data = temp_kelp,
 
 ## c.
 
+```{r}
 
+# Fit the model first to extract residuals ----
+kelp_model <- lm(
+  kelp_elong ~ temp_c,
+  data = kelp)
 
+# Check normality of residuals: Q-Q plot ----
+qqnorm(residuals(kelp_model))
+qqline(residuals(kelp_model),
+       col = "#e76f51")
+
+# Check homoscedasticity: residuals vs fitted values ----
+plot(fitted(kelp_model),
+     residuals(kelp_model),
+     xlab = "Fitted values",
+     ylab = "Residuals",
+     pch = 19,
+     col = "#2a9d8f")
+abline(h = 0,
+       col = "#e76f51",
+       lty = 2)
+
+```
+
+```{r}
+
+# Pearson's correlation coefficient test ----
+cor.test(kelp$temp_c, 
+         kelp$kelp_elong, 
+         method = "pearson")
+
+# Simple linear regression ----
+summary(kelp_model)
+
+```
+
+Linearity was assessed visually using a scatterplot of temperature vs. elongation rate with a fitted regression line. Normality of residuals was checked using a Q-Q plot, and homoscedasticity was assessed using a residuals vs. fitted values plot. The scatterplot suggests a reasonably linear relationship, the Q-Q plot shows residuals falling close to the reference line, and the residuals vs. fitted plot shows no obvious pattern. All three assumptions appear reasonably satisfied too. 
 
 
 
