@@ -35,9 +35,36 @@ my_data <- read.csv(
 
 To start off, in order to measure the strength and direction of the relationship between kelp length and temperature I will use Pearson's Correlation Coefficient. In order to model the relationship with a line, I will use a simple linear regression. The Pearson's Correlation Coefficient provides a numerical value to describe the relationship between the two variables and the simple linear regression models this relationship with a line. 
 
+## b. Create a visualization 
+
+```{r}
+
+# base layer: ggplot
+ggplot(data = temp_kelp, 
+       # x-axis: temperature
+       # y-axis: kelp elongation rate (cm/day)
+       mapping = aes(x = temp_c,
+                     y = kelp_elong)) +
+  # first layer: adding data points 
+  geom_point(color = "#2a9d8f",
+             alpha = 0.7,
+             size = 3) +
+  # second layer: adding trend line with color and standard error
+  geom_smooth(method = "lm",
+              color = "#e76f51", 
+              se = TRUE) +
+  # labeling x- and y-axis 
+  labs(
+    x = "Temperature (°C)",
+    y = "Frond Elongation Rate (cm/day)", 
+    title = "Average Giant Kelp Frond Growth in Different Temperatures") +
+  # adding different theme from default
+  theme_minimal()
+
+```
 
 
-
+## c.
 
 
 
