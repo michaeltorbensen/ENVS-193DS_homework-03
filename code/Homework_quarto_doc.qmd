@@ -64,7 +64,7 @@ ggplot(data = kelp,
 ```
 
 
-## c.
+## c. Checking assumptions and running tests
 
 ```{r}
 
@@ -105,6 +105,9 @@ summary(kelp_model)
 
 Linearity was assessed visually using a scatterplot of temperature vs. elongation rate with a fitted regression line. Normality of residuals was checked using a Q-Q plot, and homoscedasticity was assessed using a residuals vs. fitted values plot. The scatterplot suggests a reasonably linear relationship, the Q-Q plot shows residuals falling close to the reference line, and the residuals vs. fitted plot shows no obvious pattern. All three assumptions appear reasonably satisfied too. 
 
+## d. Results communication
 
+To evaluate the strength of the relationship between temperature and giant kelp frond elongation rate, I used a Pearson's correlation coefficient and a simple linear regression. These tests were appropriate because both variables are continuous and the scatterplot suggested a linear relationship between them. 
 
+Temperature was a significant negative predictor of giant kelp frond elongation rate (r = -0.69, p < 0.001 , R² = 0.473). As seawater temperature increased, kelp fronds grew more slowly, suggesting that warmer water conditions are affect Macrocystis pyrifera and inhibit its growth. This pattern is consistent with what we know about kelp ecology, giant kelp thrives in cold, nutrient-rich water, and elevated temperatures likely symbolize conditions such as reduced upwelling that limit the nutrients available for growth.
 
