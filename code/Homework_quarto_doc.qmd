@@ -187,7 +187,7 @@ ggplot(data = my_data_clean,
    # changing panel and plot background
   theme(
     panel.background = element_rect(fill = "lightblue"),
-    plot.background = element_rect(fill = "grey90")
+    plot.background = element_rect(fill = "transparent", color = NA)
   ) +
   # taking out the minor grid
   theme(panel.grid.minor = element_blank()) +
@@ -268,8 +268,7 @@ ggplot(data = my_data_clean,
 ## b. Captions 
 
 
-Figure 1. Scatter plot with 95% confidence intervals showing mean travel duration for trial number 1 and 2. 
+Figure 1. Scatter plot with mean travel duration for trial number 1 and 2 and error bars displaying  $\pm$0.5 standard deviations around the mean. Individual observation points in each trial are denoted by x-axis (1,2) as well as colors (trial 1: green, trial 2: purple). Trial number averages are denoted by the yellow circles with X's going through. Error bars display the 95% confidence interval around each regional mean. Data source: Michael Torbensen. 2026. Average bike duration spreadsheet. 
 
 
-Figure 2. 
-
+Figure 2. Two separate panels for travel direction show scatter plots with a regression line modeling the average relationship between duration (y-axis) and wind speed (x-axis). The first panel (home to UCSB) features red points indicating individual observations as well as a red regression line. The second panel (UCSB to home) features purple points indicating observations as well as a purple regression line. Data source: Michael Torbensen. 2026. Average bike duration spreadsheet.
