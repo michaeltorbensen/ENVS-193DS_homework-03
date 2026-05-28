@@ -35,7 +35,7 @@ my_data <- read.csv(
 
 ## a. An appropraite test 
 
-To start off, in order to measure the strength and direction of the relationship between kelp length and temperature I will use Pearson's Correlation Coefficient. In order to visualize and model the relationship, I will use a simple linear regression model. The Pearson's Correlation Coefficient provides a numerical value to describe the relationship between the two variables and the simple linear regression models this relationship with a line. 
+To start off, in order to measure the strength and direction of the relationship between kelp length and temperature I will use Pearson's Correlation Coefficient. Another good test to add could be the simple linear regression test as it can clarify if a true linear relationship exists between the two variables. In order to visualize and model the relationship, I will use a simple linear regression model. The Pearson's Correlation Coefficient provides a numerical value to describe the relationship between the two variables and the simple linear regression models this relationship with a line. 
 
 ## b. Create a visualization 
 
@@ -68,60 +68,65 @@ ggplot(data = kelp,
 
 ## c. Checking assumptions and running tests
 
+### 1. Checking assumptions 
 ```{r}
 
-# Fit the model first to extract residuals ----
+# Fit the model first to extract residuals
 kelp_model <- lm(
   kelp_elong ~ temp_c,
-  data = kelp)
+  data = kelp) 
 
-# Check normality of residuals: Q-Q plot ----
+# Check normality of residuals: Q-Q plot
 qqnorm(residuals(kelp_model))
 qqline(residuals(kelp_model),
        col = "#e76f51")
+
+# Check homoscedasticity: residuals vs fitted values 
+plot(fitted(kelp_model),
+     residuals(kelp_model),
+     xlab = "Fitted values", 
+     ylab = "Residuals", 
+     pch = 19, 
+     col = "#2a9daf")
+abline(h = 0, 
+       col = "#e76f51",
+       lty = 2)
+
+```
+
+### 2. Running tests
+```{r}
 
 # Pearson's correlation coefficient test ----
 cor.test(kelp$temp_c, 
          kelp$kelp_elong, 
          method = "pearson")
 
-# Simple linear regression ----
-summary(kelp_model)
-
-
 ```
 
 
-Linearity was assessed visually using a scatterplot of temperature vs. elongation rate with a fitted regression line. Normality of residuals was checked using a Q-Q plot, and homoscedasticity was assessed using a residuals vs. fitted values plot. The scatterplot suggests a reasonably linear relationship, the Q-Q plot shows residuals falling close to the reference line, and the residuals vs. fitted plot shows no obvious pattern. All assumptions appear reasonably satisfied too. 
+Linearity was assessed visually using a scatterplot of temperature vs. elongation rate with a fitted regression line. Normality of residuals was checked using a Q-Q plot and homoscedasticity was assessed using a residuals vs. fitted values plot. The scatterplot (in part b) suggests a reasonably linear relationship, the Q-Q plot shows residuals falling close to the reference line, and the residuals vs. fitted plot shows no obvious trend. All assumptions appear reasonably satisfied.  
 
 ## d. Results communication
 
-To evaluate the strength of the relationship between temperature and giant kelp frond elongation rate, I used a Pearson's correlation coefficient and a simple linear regression. These tests were appropriate because both variables are continuous and the scatterplot suggested a linear relationship between them. 
+To evaluate the strength of the relationship between temperature and giant kelp frond elongation rate I used a Pearson's correlation coefficient. This tests was an appropriate choice because both variables are continuous and the scatterplot suggested a linear relationship between them. 
 
 Temperature was a significant negative predictor of giant kelp frond elongation rate (r = -0.69, p < 0.001 , R² = 0.473). As seawater temperature increased, kelp fronds grew more slowly, suggesting that warmer water conditions are affect Macrocystis pyrifera and inhibit its growth. This pattern is consistent with what we know about kelp ecology, giant kelp thrives in cold, nutrient-rich water, and elevated temperatures likely symbolize conditions such as reduced upwelling that limit the nutrients available for growth.
 
 ## e. Test implications 
 
-Our analysis found a strong negative relationship between seawater temperature and giant kelp frond elongation rate, meaning kelp grows significantly slower as water temperatures rise. This is very concerning given ongoing ocean warming trends. If temperatures continue to increase, we should expect noticeable declines in kelp growth rates, which could have cascading effects on the broader kelp forest ecosystem. I'd recommend we prioritize monitoring sites where temperatures are already at the higher end of the range we observed, as those are likely the most at-risk locations for growth suppression.
+Our analysis found a strong negative relationship between seawater temperature and giant kelp frond elongation rate, meaning kelp grows significantly slower as water temperatures rise. This is very concerning given ongoing ocean warming trends. If temperatures continue to increase, we should expect noticeable declines in kelp growth rates, which could have cascading effects on the broader kelp forest ecosystem. I'd recommend to prioritize monitoring sites where temperatures are already at the higher end of the range we observed, as those are likely the most at-risk locations for growth suppression.
 
 ## f. Double check my own work
 
 ```{r}
 
-# Check homoscedasticity: residuals vs fitted values ----
-plot(fitted(kelp_model),
-     residuals(kelp_model),
-     xlab = "Fitted values",
-     ylab = "Residuals",
-     pch = 19,
-     col = "#2a9d8f")
-abline(h = 0,
-       col = "#e76f51",
-       lty = 2)
+# Simple linear regression ----
+summary(kelp_model)
 
 ```
 
-
+Both Pearson's correlation and simple linear regression led to the same decision to reject the null hypothesis, confirming that temperature is a significant predictor of giant kelp frond elongation rate. Pearson's correlation quantified the strength and direction of the linear relationship between temperature (°C) and elongation rate (cm/day) through the r value, while linear regression provided the slope and R² to describe how much of the variation in elongation rate is explained by temperature. Both tests agree that as temperature increases, elongation rate decreases, and together they reinforce the same biological conclusion — just from slightly different analytical angles, with correlation focused on association strength and regression focused on the nature and predictive power of the relationship.
 
 
 
@@ -225,7 +230,8 @@ ggplot(data = my_data_clean,
   # assigning a new and organized scale for the y-axis 
   scale_y_continuous(
     breaks = seq(600, max(my_data_clean$duration_sec, na.rm = TRUE), by = 60),
-    minor_breaks = seq(600, max(my_data_clean$duration_sec, na.rm = TRUE), by = 30),
+    minor_breaks = seq(600, max(my_data_clean$duration_sec, 
+                                na.rm = TRUE), by = 30),
     labels = mmss_format
   ) +
    # assigning colors for each categories
