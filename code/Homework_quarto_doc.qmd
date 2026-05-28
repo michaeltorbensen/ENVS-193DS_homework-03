@@ -291,11 +291,13 @@ In this paper, the author is wondering how effective re-connected floodplains ar
 
 ## b. 
 
-The table clearly shows the results of the ANOVA tests by including the key statistical components needed for interpretation: degrees of freedom, F-statistic, and p-value. The inclusion of N (sample size), mean, and SE (standard error) alongside the test statistics is also useful because it gives the reader context for the raw data underlying each comparison, rather than just isolating the test results. The organization by treatment, time period, and site makes it easy to compare across all four ANOVAs. 
+The table clearly shows the results of the ANOVA tests by including the key statistical components needed for interpretation: degrees of freedom, F-statistic, and p-value. The inclusion of N (sample size), mean, and SE (standard error) alongside the test statistics is also useful because it gives the reader context for the raw data underlying each comparison, rather than just isolating the test results.
 
 ## c. 
 
+The authors handled visual clutter in a way that made the graph legible but not with outstanding quality. The categories listed in the table are bold so that each separate category cannot be confused with the other. Although, all data have the same font style, size, and type. So, if there is any data that is particularly useful for the validity of the test results, it cannot be deduced by looking at the graph. That being said, the organization by treatment, time period, and site makes it easy to compare across all four ANOVAs. 
 
+## d. 
 
 
 
