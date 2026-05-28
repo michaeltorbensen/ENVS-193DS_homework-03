@@ -155,7 +155,8 @@ ggplot(data = my_data_clean,
        # x-axis: trial number
        # y-axis: duration
        mapping = aes(x = factor(trial_number), 
-                     y = duration_sec)) + 
+                     y = duration_sec, 
+                     color = factor(trial_number))) + 
   # first-layer: jitter horizontally to organize visualization
   geom_jitter(width = 0.13, height = 0) +
   # mean points on graph
@@ -169,7 +170,10 @@ ggplot(data = my_data_clean,
                fun.args = list(mult = 0.5), # tighter view of variability
                geom = "errorbar", # adding error-bar
                width = 0.3, # changing width
-               color = "#f5475e") + # changing color
+               color = "#2b2b2b") + # changing color
+  # assigning colors to trial 1 and trial 2 
+  scale_color_manual(values = c("1" = "#19e36a",
+                                "2" = "#7836b5")) +
   # assigning a new and organized scale for y-axis 
   scale_y_continuous(
     breaks = seq(600, max(my_data_clean$duration_sec, na.rm = TRUE), by = 60),
@@ -264,7 +268,7 @@ ggplot(data = my_data_clean,
 ## b. Captions 
 
 
-Figure 1. 
+Figure 1. Scatter plot with 95% confidence intervals showing mean travel duration for trial number 1 and 2. 
 
 
 Figure 2. 
