@@ -6,6 +6,8 @@ date: May 26, 2026
 execute: 
   message: FALSE
   warning: FALSE
+  fig-width: 6
+  fig-height: 5
 ---
 
 ```{r}
@@ -25,7 +27,7 @@ kelp <- read.csv(
 
 # reading in personal data 
 my_data <- read.csv(
-  here("data","Personal_data.csv"))
+  here("data","personal_data.csv"))
 
 ```
 
@@ -33,7 +35,7 @@ my_data <- read.csv(
 
 ## a. An appropraite test 
 
-To start off, in order to measure the strength and direction of the relationship between kelp length and temperature I will use Pearson's Correlation Coefficient. In order to visualize and model the relationship, I will use a simple linear regression. The Pearson's Correlation Coefficient provides a numerical value to describe the relationship between the two variables and the simple linear regression models this relationship with a line. 
+To start off, in order to measure the strength and direction of the relationship between kelp length and temperature I will use Pearson's Correlation Coefficient. In order to visualize and model the relationship, I will use a simple linear regression model. The Pearson's Correlation Coefficient provides a numerical value to describe the relationship between the two variables and the simple linear regression models this relationship with a line. 
 
 ## b. Create a visualization 
 
@@ -78,6 +80,34 @@ qqnorm(residuals(kelp_model))
 qqline(residuals(kelp_model),
        col = "#e76f51")
 
+# Pearson's correlation coefficient test ----
+cor.test(kelp$temp_c, 
+         kelp$kelp_elong, 
+         method = "pearson")
+
+# Simple linear regression ----
+summary(kelp_model)
+
+
+```
+
+
+Linearity was assessed visually using a scatterplot of temperature vs. elongation rate with a fitted regression line. Normality of residuals was checked using a Q-Q plot, and homoscedasticity was assessed using a residuals vs. fitted values plot. The scatterplot suggests a reasonably linear relationship, the Q-Q plot shows residuals falling close to the reference line, and the residuals vs. fitted plot shows no obvious pattern. All assumptions appear reasonably satisfied too. 
+
+## d. Results communication
+
+To evaluate the strength of the relationship between temperature and giant kelp frond elongation rate, I used a Pearson's correlation coefficient and a simple linear regression. These tests were appropriate because both variables are continuous and the scatterplot suggested a linear relationship between them. 
+
+Temperature was a significant negative predictor of giant kelp frond elongation rate (r = -0.69, p < 0.001 , R² = 0.473). As seawater temperature increased, kelp fronds grew more slowly, suggesting that warmer water conditions are affect Macrocystis pyrifera and inhibit its growth. This pattern is consistent with what we know about kelp ecology, giant kelp thrives in cold, nutrient-rich water, and elevated temperatures likely symbolize conditions such as reduced upwelling that limit the nutrients available for growth.
+
+## e. Test implications 
+
+Our analysis found a strong negative relationship between seawater temperature and giant kelp frond elongation rate, meaning kelp grows significantly slower as water temperatures rise. This is very concerning given ongoing ocean warming trends. If temperatures continue to increase, we should expect noticeable declines in kelp growth rates, which could have cascading effects on the broader kelp forest ecosystem. I'd recommend we prioritize monitoring sites where temperatures are already at the higher end of the range we observed, as those are likely the most at-risk locations for growth suppression.
+
+## f. Double check my own work
+
+```{r}
+
 # Check homoscedasticity: residuals vs fitted values ----
 plot(fitted(kelp_model),
      residuals(kelp_model),
@@ -91,23 +121,151 @@ abline(h = 0,
 
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+# Problem 2. Personal data 
+
+## a. Updating visualizations 
+
 ```{r}
 
-# Pearson's correlation coefficient test ----
-cor.test(kelp$temp_c, 
-         kelp$kelp_elong, 
-         method = "pearson")
+# creating new object called my_data_clean
+my_data_clean <- my_data |>
+# cleaning column names so only lowercase and underscores are used
+clean_names() |>
+  mutate(duration_sec = as.numeric(ms(duration_mm_ss)))
+  
+```
 
-# Simple linear regression ----
-summary(kelp_model)
+```{r}
+
+# define mm:ss label format
+mmss_format <- function(x) sprintf("%d:%02d", x %/% 60, x %% 60)
+# base layer: gpplot
+ggplot(data = my_data_clean, 
+       # x-axis: trial number
+       # y-axis: duration
+       mapping = aes(x = factor(trial_number), 
+                     y = duration_sec)) + 
+  # first-layer: jitter horizontally to organize visualization
+  geom_jitter(width = 0.13, height = 0) +
+  # mean points on graph
+  stat_summary(fun = mean, # calculate average
+               geom = "point",  # display as point
+               color = "#f2f533", # change color of point
+               shape = 13, # change shape of point
+               size = 8) +
+  # standard deviation error bars
+  stat_summary(fun.data = mean_sdl, , # calculate standard deviation
+               fun.args = list(mult = 0.5), # tighter view of variability
+               geom = "errorbar", # adding error-bar
+               width = 0.3, # changing width
+               color = "#f5475e") + # changing color
+  # assigning a new and organized scale for y-axis 
+  scale_y_continuous(
+    breaks = seq(600, max(my_data_clean$duration_sec, na.rm = TRUE), by = 60),
+    minor_breaks = seq(600, max(my_data_clean$duration_sec, na.rm = TRUE), by = 30),
+    labels = mmss_format
+  ) +
+  # adjusting plot (decreasing space in between categories and plot borders)
+  scale_x_discrete(expand = expansion(add = 0.8, mult = 0.1)) +
+  # changing theme from default
+  theme_bw(base_family = "serif") +
+   # changing panel and plot background
+  theme(
+    panel.background = element_rect(fill = "lightblue"),
+    plot.background = element_rect(fill = "grey90")
+  ) +
+  # taking out the minor grid
+  theme(panel.grid.minor = element_blank()) +
+  # taking out legend 
+  theme(legend.position = "none") +
+  # adjusting title position
+  theme(plot.title = element_text(hjust = 0.5)) +
+  # adjusting subtitle position
+  theme(plot.subtitle = element_text(hjust = 0.5)) +
+  # adding title and labels to x- and y-axis
+  labs(x = "Trial Number",
+       y = "Duration (mm:ss)",
+       title = "Travel Time Analysis: Trial # and Duration", 
+       subtitle = "Latest observation; 5/26/2026")
+               
+```
+
+
+```{r}
+
+# base layer ggplot
+ggplot(data = my_data_clean,
+       # x-axis = wind speed
+       # # y-axis = direction of trip
+       # # color varies by direction of trip
+      aes(x = wind_speed_mph,
+                     y = duration_sec,
+                     color = direction_of_trip)) +
+  # adding points
+  geom_point(size = 4, alpha = 0.8) +
+  # adding a regression line for both plots
+  geom_smooth(method = "lm", se = FALSE) +
+  # splitting into two graphs (one per category)
+  facet_wrap(~ direction_of_trip) +
+  # assigning a new and organized scale for the y-axis 
+  scale_y_continuous(
+    breaks = seq(600, max(my_data_clean$duration_sec, na.rm = TRUE), by = 60),
+    minor_breaks = seq(600, max(my_data_clean$duration_sec, na.rm = TRUE), by = 30),
+    labels = mmss_format
+  ) +
+   # assigning colors for each categories
+  scale_color_manual(values = c("home to UCSB" = "#fc5538",
+                                "UCSB to home" = "#7836b5")) +
+   # changing theme from default
+  theme_light(base_family = "serif") +
+  # changing panel and plot background
+  theme(
+    panel.background = element_rect(fill = "#bdffd7"),
+    plot.background = element_rect(fill = "transparent", color = NA)
+  ) +
+  # labeling x- and y-axis and adding title
+  labs(title = "Travel Time Analysis: Wind & Duration",
+       subtitle = "Latest observation; 5/26/2026",
+       x = "Wind Speed (mph)",
+       y = "Duration (mm:ss)") +
+  # adjusting the look of major and minor y grids 
+  theme(panel.grid.minor.y = element_line(color = "gray80",
+                                          linewidth = 0.5),
+        panel.grid.major.y = element_line(color = "gray80",
+                                          linewidth = 0.5)) +
+  # taking out the minor grid
+  theme(panel.grid.minor = element_blank()) +
+  # taking out legend 
+  theme(legend.position = "none") +
+  # adjusting title position
+  theme(plot.title = element_text(hjust = 0.5)) +
+  # adjusting subtitle position
+  theme(plot.subtitle = element_text(hjust = 0.5)) +
+  # adjusting facet_wrap text and color
+  theme(
+  strip.text = element_text(size = 12, color = "white"),
+  strip.background = element_rect(fill = "#8e9e95")) +
+  # adjusting x- and y-axis text
+  theme(axis.title = element_text(size = 12))
 
 ```
 
-Linearity was assessed visually using a scatterplot of temperature vs. elongation rate with a fitted regression line. Normality of residuals was checked using a Q-Q plot, and homoscedasticity was assessed using a residuals vs. fitted values plot. The scatterplot suggests a reasonably linear relationship, the Q-Q plot shows residuals falling close to the reference line, and the residuals vs. fitted plot shows no obvious pattern. All three assumptions appear reasonably satisfied too. 
+## b. Captions 
 
-## d. Results communication
 
-To evaluate the strength of the relationship between temperature and giant kelp frond elongation rate, I used a Pearson's correlation coefficient and a simple linear regression. These tests were appropriate because both variables are continuous and the scatterplot suggested a linear relationship between them. 
+Figure 1. 
 
-Temperature was a significant negative predictor of giant kelp frond elongation rate (r = -0.69, p < 0.001 , R² = 0.473). As seawater temperature increased, kelp fronds grew more slowly, suggesting that warmer water conditions are affect Macrocystis pyrifera and inhibit its growth. This pattern is consistent with what we know about kelp ecology, giant kelp thrives in cold, nutrient-rich water, and elevated temperatures likely symbolize conditions such as reduced upwelling that limit the nutrients available for growth.
+
+Figure 2. 
 
