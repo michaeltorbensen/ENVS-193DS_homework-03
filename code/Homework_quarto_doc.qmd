@@ -1,13 +1,14 @@
 ---
 title: "Homework 3 - 193DS Spring"
 author: "Michael Torbensen"
-format: pdf
+format: html
 date: May 26, 2026
 execute: 
   message: FALSE
   warning: FALSE
   fig-width: 6
   fig-height: 5
+  mainfont: "Times New Roman"
 ---
 
 ```{r}
@@ -129,14 +130,6 @@ summary(kelp_model)
 Both Pearson's correlation and simple linear regression led to the same decision to reject the null hypothesis, confirming that temperature is a significant predictor of giant kelp frond elongation rate. Pearson's correlation quantified the strength and direction of the linear relationship between temperature (°C) and elongation rate (cm/day) through the r value, while linear regression provided the slope and R² to describe how much of the variation in elongation rate is explained by temperature. Both tests agree that as temperature increases, elongation rate decreases, and together they reinforce the same biological conclusion — just from slightly different analytical angles, with correlation focused on association strength and regression focused on the nature and predictive power of the relationship.
 
 
-
-
-
-
-
-
-
-
 # Problem 2. Personal data 
 
 ## a. Updating visualizations 
@@ -163,18 +156,20 @@ ggplot(data = my_data_clean,
                      y = duration_sec, 
                      color = factor(trial_number))) + 
   # first-layer: jitter horizontally to organize visualization
-  geom_jitter(width = 0.13, height = 0) +
+  geom_jitter(width = 0.13,
+              height = 0,
+              size = 2.5) +
   # mean points on graph
   stat_summary(fun = mean, # calculate average
                geom = "point",  # display as point
                color = "#f2f533", # change color of point
                shape = 13, # change shape of point
-               size = 8) +
+               size = 10) +
   # standard deviation error bars
   stat_summary(fun.data = mean_sdl, , # calculate standard deviation
                fun.args = list(mult = 0.5), # tighter view of variability
                geom = "errorbar", # adding error-bar
-               width = 0.3, # changing width
+               width = 0.4, # changing width
                color = "#2b2b2b") + # changing color
   # assigning colors to trial 1 and trial 2 
   scale_color_manual(values = c("1" = "#19e36a",
@@ -186,7 +181,7 @@ ggplot(data = my_data_clean,
     labels = mmss_format
   ) +
   # adjusting plot (decreasing space in between categories and plot borders)
-  scale_x_discrete(expand = expansion(add = 0.8, mult = 0.1)) +
+  scale_x_discrete(expand = expansion(add = 0.7, mult = 0.05)) +
   # changing theme from default
   theme_bw(base_family = "serif") +
    # changing panel and plot background
@@ -196,13 +191,15 @@ ggplot(data = my_data_clean,
   ) +
   # taking out the minor grid
   theme(panel.grid.minor = element_blank()) +
+  # taking out major grid 
+  theme(panel.grid.major = element_blank()) +
   # taking out legend 
   theme(legend.position = "none") +
   # adjusting title position
   theme(plot.title = element_text(hjust = 0.5)) +
   # adjusting subtitle position
   theme(plot.subtitle = element_text(hjust = 0.5)) +
-  # adding title and labels to x- and y-axis
+  # adding title and labeling to x- and y-axis
   labs(x = "Trial Number",
        y = "Duration (mm:ss)",
        title = "Travel Time Analysis: Trial # and Duration", 
@@ -249,13 +246,10 @@ ggplot(data = my_data_clean,
        subtitle = "Latest observation; 5/26/2026",
        x = "Wind Speed (mph)",
        y = "Duration (mm:ss)") +
-  # adjusting the look of major and minor y grids 
-  theme(panel.grid.minor.y = element_line(color = "gray80",
-                                          linewidth = 0.5),
-        panel.grid.major.y = element_line(color = "gray80",
-                                          linewidth = 0.5)) +
   # taking out the minor grid
   theme(panel.grid.minor = element_blank()) +
+  # taking out major grid 
+  theme(panel.grid.major = element_blank()) +
   # taking out legend 
   theme(legend.position = "none") +
   # adjusting title position
@@ -278,3 +272,37 @@ Figure 1. Scatter plot with mean travel duration for trial number 1 and 2 and er
 
 
 Figure 2. Two separate panels for travel direction show scatter plots with a regression line modeling the average relationship between duration (y-axis) and wind speed (x-axis). The first panel (home to UCSB) features red points indicating individual observations as well as a red regression line. The second panel (UCSB to home) features purple points indicating observations as well as a purple regression line. Data source: Michael Torbensen. 2026. Average bike duration spreadsheet.
+
+# Problem 3. Affective visualization
+
+
+
+
+
+
+
+# Problem 4. Statistical critique 
+
+## a. Revisit and summarize 
+
+In this paper, the author is wondering how effective re-connected floodplains are at de-nitrifying bodies of water that are useful to humans and other biological communities. Out of the tests conducted, analysis of variance (ANOVA) is the main test that the author used. 
+
+<img src="images/ANOVA_test.png" alt="ANOVA Table showing nitrate levels over time in four water sources"> 
+
+## b. 
+
+The table clearly shows the results of the ANOVA tests by including the key statistical components needed for interpretation: degrees of freedom, F-statistic, and p-value. The inclusion of N (sample size), mean, and SE (standard error) alongside the test statistics is also useful because it gives the reader context for the raw data underlying each comparison, rather than just isolating the test results. The organization by treatment, time period, and site makes it easy to compare across all four ANOVAs. 
+
+## c. 
+
+
+
+
+
+
+
+
+
+
+
+
