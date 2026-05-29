@@ -6,6 +6,7 @@ format: pdf
 fig-width: 6
 fig-height: 5
 mainfont: "Times New Roman"
+toc: TRUE
 execute: 
   message: FALSE
   warning: FALSE
