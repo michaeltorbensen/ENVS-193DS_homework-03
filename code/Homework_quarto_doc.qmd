@@ -70,6 +70,7 @@ ggplot(data = kelp,
 ## c. Checking assumptions and running tests
 
 ### 1. Checking assumptions 
+
 ```{r}
 
 # Fit the model first to extract residuals
@@ -96,6 +97,7 @@ abline(h = 0,
 ```
 
 ### 2. Running tests
+
 ```{r}
 
 # Pearson's correlation coefficient test ----
@@ -104,7 +106,6 @@ cor.test(kelp$temp_c,
          method = "pearson")
 
 ```
-
 
 Linearity was assessed visually using a scatterplot of temperature vs. elongation rate with a fitted regression line. Normality of residuals was checked using a Q-Q plot and homoscedasticity was assessed using a residuals vs. fitted values plot. The scatterplot (in part b) suggests a reasonably linear relationship, the Q-Q plot shows residuals falling close to the reference line, and the residuals vs. fitted plot shows no obvious trend. All assumptions appear reasonably satisfied.  
 
@@ -128,7 +129,6 @@ summary(kelp_model)
 ```
 
 Both Pearson's correlation and simple linear regression led to the same decision to reject the null hypothesis, confirming that temperature is a significant predictor of giant kelp frond elongation rate. Pearson's correlation quantified the strength and direction of the linear relationship between temperature (°C) and elongation rate (cm/day) through the r value, while linear regression provided the slope and R² to describe how much of the variation in elongation rate is explained by temperature. Both tests agree that as temperature increases, elongation rate decreases, and together they reinforce the same biological conclusion — just from slightly different analytical angles, with correlation focused on association strength and regression focused on the nature and predictive power of the relationship.
-
 
 # Problem 2. Personal data 
 
@@ -267,9 +267,7 @@ ggplot(data = my_data_clean,
 
 ## b. Captions 
 
-
 Figure 1. Scatter plot with mean travel duration for trial number 1 and 2 and error bars displaying  $\pm$ 0.5 standard deviations around the mean. Individual observation points in each trial are denoted by x-axis (1,2) as well as colors (trial 1: green, trial 2: purple). Trial number averages are denoted by the yellow circles with X's going through. Error bars display the 95% confidence interval around each regional mean. Data source: Michael Torbensen. 2026. Average bike duration spreadsheet. 
-
 
 Figure 2. Two separate panels for travel direction show scatter plots with a regression line modeling the average relationship between duration (y-axis) and wind speed (x-axis). The first panel (home to UCSB) features red points indicating individual observations as well as a red regression line. The second panel (UCSB to home) features purple points indicating observations as well as a purple regression line. Data source: Michael Torbensen. 2026. Average bike duration spreadsheet.
 
@@ -284,9 +282,26 @@ For my affective visualization, I was thinking of representing mostly all of my 
 ```{r}
 #| echo: false
 #| fig-width: 5
-#| fig-height: 4
+#| fig-height: 2
+knitr::include_graphics("images/sketch.png")
+```
+
+
+## c. Draft of visualization 
+
+```{r}
+#| echo: false
+#| out-width: "75%"
 knitr::include_graphics("images/bike_visual.png")
 ```
+
+## d. Artist statement
+
+I enjoy getting to my destinations as fast as possible and learning what variables makes me slower and what variables makes me faster. So, I have created a two panel plot that expresses two different categorical variables and 3 different continuous variables. I will be using colored pencils on a blank sheet of white paper to create my final drafted drawing. 
+
+## e. Presentation
+
+[View Presentation](https://docs.google.com/presentation/d/1Pwn96klhM3I_SVNqkeeJASpArRlIhMYD2BLW1zIHzIE/present)
 
 # Problem 4. Statistical critique 
 
@@ -310,11 +325,3 @@ The authors handled visual clutter in a way that made the graph legible but not 
 ## d. Recommendations
 
 Typically, for an ANOVA test, it's common to mention the sum of squares (SS) and mean squares (MS) to measure the among-group variation and within-group variation as this is where the F-statistic and effect size come from. This would give more information to the reader and increase clarity and comprehension of the data. Also, since the group sizes are so large, the SE numbers are very small. If the SE column was replaced with SD, the spread of the nitrate measurements in each group would be much more visible and one can judge whether differences between group means are biologically significant. 
-
-
-
-
-
-
-
-
