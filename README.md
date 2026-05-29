@@ -29,4 +29,4 @@ all analysis code and write-up.
 ## Rendered Output
 
 The rendered document can be viewed at:
-[Homework 3 Rendered Output](https://michaeltorbensen.github.io/ENVS-193DS_homework-03/)
+[Homework 3 Rendered Output](https://github.com/michaeltorbensen/ENVS-193DS_homework-03/blob/main/code/Homework_quarto_doc.pdf) 
