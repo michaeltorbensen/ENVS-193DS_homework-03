@@ -289,17 +289,17 @@ In this paper, the author is wondering how effective re-connected floodplains ar
 
 <img src="images/ANOVA_test.png" alt="ANOVA Table showing nitrate levels over time in four water sources"> 
 
-## b. 
+## b. Visual Clarity
 
 The table clearly shows the results of the ANOVA tests by including the key statistical components needed for interpretation: degrees of freedom, F-statistic, and p-value. The inclusion of N (sample size), mean, and SE (standard error) alongside the test statistics is also useful because it gives the reader context for the raw data underlying each comparison, rather than just isolating the test results.
 
-## c. 
+## c. Aesthetic clarity 
 
 The authors handled visual clutter in a way that made the graph legible but not with outstanding quality. The categories listed in the table are bold so that each separate category cannot be confused with the other. Although, all data have the same font style, size, and type. So, if there is any data that is particularly useful for the validity of the test results, it cannot be deduced by looking at the graph. That being said, the organization by treatment, time period, and site makes it easy to compare across all four ANOVAs. 
 
-## d. 
+## d. Recommendations
 
-
+Typically, for an ANOVA test, it's common to mention the sum of squares (SS) and mean squares (MS) to measure the among-group variation and within-group variation as this is where the F-statistic and effect size come from. This would give more information to the reader and increase clarity and comprehension of the data. Also, since the group sizes are so large, the SE numbers are very small. If the SE column was replaced with SD, the spread of the nitrate measurements in each group would be much more visible and one can judge whether differences between group means are biologically significant. 
 
 
 
