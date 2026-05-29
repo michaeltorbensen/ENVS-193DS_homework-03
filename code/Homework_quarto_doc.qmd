@@ -1,14 +1,14 @@
 ---
 title: "Homework 3 - 193DS Spring"
 author: "Michael Torbensen"
-format: html
 date: May 26, 2026
+format: pdf
+fig-width: 6
+fig-height: 5
+mainfont: "Times New Roman"
 execute: 
   message: FALSE
   warning: FALSE
-  fig-width: 6
-  fig-height: 5
-  mainfont: "Times New Roman"
 ---
 
 ```{r}
@@ -268,18 +268,25 @@ ggplot(data = my_data_clean,
 ## b. Captions 
 
 
-Figure 1. Scatter plot with mean travel duration for trial number 1 and 2 and error bars displaying  $\pm$0.5 standard deviations around the mean. Individual observation points in each trial are denoted by x-axis (1,2) as well as colors (trial 1: green, trial 2: purple). Trial number averages are denoted by the yellow circles with X's going through. Error bars display the 95% confidence interval around each regional mean. Data source: Michael Torbensen. 2026. Average bike duration spreadsheet. 
+Figure 1. Scatter plot with mean travel duration for trial number 1 and 2 and error bars displaying  $\pm$ 0.5 standard deviations around the mean. Individual observation points in each trial are denoted by x-axis (1,2) as well as colors (trial 1: green, trial 2: purple). Trial number averages are denoted by the yellow circles with X's going through. Error bars display the 95% confidence interval around each regional mean. Data source: Michael Torbensen. 2026. Average bike duration spreadsheet. 
 
 
 Figure 2. Two separate panels for travel direction show scatter plots with a regression line modeling the average relationship between duration (y-axis) and wind speed (x-axis). The first panel (home to UCSB) features red points indicating individual observations as well as a red regression line. The second panel (UCSB to home) features purple points indicating observations as well as a purple regression line. Data source: Michael Torbensen. 2026. Average bike duration spreadsheet.
 
 # Problem 3. Affective visualization
 
+## a. Idea for affective visualization 
 
+For my affective visualization, I was thinking of representing mostly all of my data with two bikes using the wheels as a place to represent my individual observations. The separate bikes will represent all data points that fall on either trial number one or two (categorical data). The rear wheel will represent home to UCSB data observations and the front wheel will represent UCSB to home observations (categorical data). Within the tires, each spoke will represent wind speed (width of spoke), travel duration (length of spoke), and number of stop lights (color of spoke). Also, I'm thinking of adding a sheen/gloss to the spoke with the quickest trip and the slowest trip will be a little transparent. 
 
+## b. Sketch for visualization 
 
-
-
+```{r}
+#| echo: false
+#| fig-width: 5
+#| fig-height: 4
+knitr::include_graphics("images/bike_visual.png")
+```
 
 # Problem 4. Statistical critique 
 
@@ -287,7 +294,10 @@ Figure 2. Two separate panels for travel direction show scatter plots with a reg
 
 In this paper, the author is wondering how effective re-connected floodplains are at de-nitrifying bodies of water that are useful to humans and other biological communities. Out of the tests conducted, analysis of variance (ANOVA) is the main test that the author used. 
 
-<img src="images/ANOVA_test.png" alt="ANOVA Table showing nitrate levels over time in four water sources"> 
+```{r}
+#| echo: false
+knitr::include_graphics("images/ANOVA.png")
+```
 
 ## b. Visual Clarity
 
