@@ -37,7 +37,7 @@ my_data <- read.csv(
 
 ## a. An appropraite test 
 
-To start off, in order to measure the strength and direction of the relationship between kelp length and temperature I will use Pearson's Correlation Coefficient. Another good test to add could be the simple linear regression test as it can clarify if a true linear relationship exists between the two variables. In order to visualize and model the relationship, I will use a simple linear regression model. The Pearson's Correlation Coefficient provides a numerical value to describe the relationship between the two variables and the simple linear regression models this relationship with a line. 
+To measure the strength and direction of the relationship between kelp frond length and temperature, I will use two correlation tests: Pearson's Correlation Coefficient and Spearman's Rank Correlation. Pearson's Correlation Coefficient assumes a linear relationship between two continuous variables and provides an r value describing the strength and direction of that relationship. Spearman's Rank Correlation is the non-parametric alternative, which converts values to ranks and exemplifies outliers. Since both tests produce similar results, it can strengthen the conclusion while any disagreement between them may suggest outliers or a non-linear relationship in the data.
 
 ## b. Create a visualization 
 
@@ -66,45 +66,53 @@ ggplot(data = kelp,
 
 ## c. Checking assumptions and running tests
 
-### 1. Checking assumptions 
+### Checking normality of temperature 
 
 ```{r}
 
-# Fit the model first to extract residuals
-kelp_model <- lm(
-  kelp_elong ~ temp_c,
-  data = kelp) 
-
-# Check normality of residuals: Q-Q plot
-qqnorm(residuals(kelp_model))
-qqline(residuals(kelp_model),
-       col = "#e76f51")
-
-# Check homoscedasticity: residuals vs fitted values 
-plot(fitted(kelp_model),
-     residuals(kelp_model),
-     xlab = "Fitted values", 
-     ylab = "Residuals", 
-     pch = 19, 
-     col = "#2a9daf")
-abline(h = 0, 
-       col = "#e76f51",
-       lty = 2)
+# base layer: ggplot
+ggplot(data = kelp, 
+       # setting sample to only temperature 
+       aes(sample = temp_c)) +
+  # first layer: qq plot + points
+  geom_qq(color = "green") +
+  # second layer: qq line
+  geom_qq_line(color = "blue") +
+  # taking out legend
+  theme(legend.position = "none") +
+  # changing theme from default 
+  theme_minimal()
 
 ```
 
-### 2. Running tests
+### Checking normality of kelp elongation rate
+```{r}
+
+# base layer: ggplot
+ggplot(data = kelp, 
+       # setting sample to only kelp elongation rate  
+       aes(sample = kelp_elong)) +
+  # first layer: qq plot + points
+  geom_qq(color = "green") +
+  # second layer: qq line
+  geom_qq_line(color = "blue") +
+  # taking out legend
+  theme(legend.position = "none") +
+  # changing theme from default 
+  theme_minimal()
+
+```
+
+Linearity was assessed visually using a scatterplot of temperature (°C) vs. giant kelp frond elongation rate (cm/day). Normality of each variable was assessed individually using Q-Q plots for both temperature and elongation rate. The scatterplot suggests a negative linear relationship between the two variables, and both Q-Q plots show values falling close to the reference line, indicating normality. All assumptions for Pearson's correlation appear satisfied. 
 
 ```{r}
 
-# Pearson's correlation coefficient test ----
+# Pearson's correlation coefficient test
 cor.test(kelp$temp_c, 
          kelp$kelp_elong, 
          method = "pearson")
 
 ```
-
-Linearity was assessed visually using a scatterplot of temperature vs. elongation rate with a fitted regression line. Normality of residuals was checked using a Q-Q plot and homoscedasticity was assessed using a residuals vs. fitted values plot. The scatterplot (in part b) suggests a reasonably linear relationship, the Q-Q plot shows residuals falling close to the reference line, and the residuals vs. fitted plot shows no obvious trend. All assumptions appear reasonably satisfied.  
 
 ## d. Results communication
 
@@ -120,12 +128,14 @@ Our analysis found a strong negative relationship between seawater temperature a
 
 ```{r}
 
-# Simple linear regression ----
-summary(kelp_model)
+# Spearman's Rank Correlation test
+cor.test(kelp$temp_c, 
+         kelp$kelp_elong, 
+         method = "spearman")
 
 ```
 
-Both Pearson's correlation and simple linear regression led to the same decision to reject the null hypothesis, confirming that temperature is a significant predictor of giant kelp frond elongation rate. Pearson's correlation quantified the strength and direction of the linear relationship between temperature (°C) and elongation rate (cm/day) through the r value, while linear regression provided the slope and R² to describe how much of the variation in elongation rate is explained by temperature. Both tests agree that as temperature increases, elongation rate decreases, and together they reinforce the same biological conclusion — just from slightly different analytical angles, with correlation focused on association strength and regression focused on the nature and predictive power of the relationship.
+Both Pearson's correlation coefficient and Spearman's Rank Correlation were used to assess the strength and direction of the relationship between water temperature (°C) and giant kelp frond elongation rate (cm/day). Pearson's correlation coefficient (r = -0.688, t(30) = -5.189, p < 0.001) showed a moderately negative linear relationship between the two variables, meaning that as water temperature increased, giant kelp frond elongation rate significantly decreased. The t-statistic of -5.189 confirmed that this correlation was significantly different from zero. Spearman's Rank Correlation (ρ = -0.689, S = 9216.1, p < 0.001) obtained this finding by ranking both temperature and elongation rate values and measuring the monotonic relationship between them. It confirms that higher ranked temperatures consistently corresponded with lower ranked elongation rates. The almost identical correlation coefficients produced by both tests (r = -0.688, ρ = -0.689) strengthen confidence in the result. The agreement between a parametric and non-parametric tests suggests the relationship is not being driven by outliers or violations of normality.
 
 # Problem 2. Personal data 
 
@@ -217,8 +227,6 @@ ggplot(data = my_data_clean,
                      color = direction_of_trip)) +
   # adding points
   geom_point(size = 4, alpha = 0.8) +
-  # adding a regression line for both plots
-  geom_smooth(method = "lm", se = FALSE) +
   # splitting into two graphs (one per category)
   facet_wrap(~ direction_of_trip) +
   # assigning a new and organized scale for the y-axis 
