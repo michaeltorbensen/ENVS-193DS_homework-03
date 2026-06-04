@@ -53,10 +53,6 @@ ggplot(data = kelp,
   geom_point(color = "#2a9d8f",
              alpha = 0.7,
              size = 3) +
-  # second layer: adding trend line with color and standard error
-  geom_smooth(method = "lm",
-              color = "#e76f51", 
-              se = TRUE) +
   # labeling x- and y-axis 
   labs(
     x = "Temperature (°C)",
